@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área 31</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <style>
+        :root {
+            --primary: #F7A088;   
+            --bg-dark: #050d14;   
+            --ocean: #122C4F;     
+            --ifood: #ea1d2c;     
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --success: #7CFC00;
+        }
+
+        /* Reset e Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); scroll-behavior: smooth; }
+
+        body {
+            background: radial-gradient(circle at top right, #122C4F, #050d14);
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Sistema de Transição */
+        #page-transition {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10000; background: #050d14; 
+            display: none; opacity: 0;
+            justify-content: center; align-items: center; pointer-events: none;
+        }
+        #page-transition.active { display: flex; opacity: 1; }
+
+        .loader-icon {
+            width: 40px; height: 40px; border: 3px solid var(--glass);
+            border-top: 3px solid var(--primary); border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Animações de Revelação */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* HEADER */
+        header { 
+            width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; 
+            align-items: center; position: fixed; top: 0; z-index: 1000;
+            background: rgba(5, 13, 20, 0.8); backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .logo { font-weight: 900; letter-spacing: 2px; font-size: 1.4rem; cursor: pointer; }
+        .destaque { color: var(--primary); }
+        
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        header a { 
+            color: white; text-decoration: none; font-size: 11px; font-weight: 800; 
+            text-transform: uppercase; opacity: 0.6; cursor: pointer; letter-spacing: 1px; 
+        }
+        header a:hover, header a.nav-active { opacity: 1; color: var(--primary); }
+
+        /* SEÇÕES */
+        section { min-height: 100vh; padding: 140px 8% 100px; display: none; flex-direction: column; align-items: center; width: 100%; }
+        section.active-section { display: flex; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ABA 1: INÍCIO (ÁREA 31) */
+        .hero-container { text-align: center; max-width: 900px; margin-bottom: 60px; }
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: 0.85; letter-spacing: -3px; margin-bottom: 25px; }
+        
+        .blog-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px; width: 100%; max-width: 1200px;
+        }
+        .blog-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 35px; overflow: hidden; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column;
+        }
+        .blog-img { height: 180px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; }
+        .blog-content { padding: 30px; }
+        .blog-tag { font-size: 10px; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .blog-content h3 { font-size: 1.5rem; margin-bottom: 15px; font-weight: 800; }
+        .blog-content p { opacity: 0.6; font-size: 0.95rem; margin-bottom: 20px; }
+
+        .btn-social { 
+            padding: 10px 20px; border-radius: 12px; border: 1px solid var(--glass-border);
+            color: white; text-decoration: none; font-weight: 700; font-size: 12px;
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.02);
+            cursor: pointer;
+        }
+        .btn-social:hover { background: var(--primary); color: var(--bg-dark); }
+
+        /* ABA 2: 31FOOD */
+        .ifood-banner {
+            width: 100%; max-width: 1100px; background: linear-gradient(135deg, #ea1d2c, #9d141d);
+            border-radius: 40px; padding: 50px; position: relative; overflow: hidden; margin-bottom: 50px;
+            box-shadow: 0 30px 60px rgba(234, 29, 44, 0.2);
+        }
+        .ifood-banner h2 { font-size: 3rem; font-weight: 900; margin-bottom: 10px; }
+        
+        .id-card {
+            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 35px;
+            border: 1px solid var(--glass-border); width: 100%; max-width: 500px;
+            margin-bottom: 50px; text-align: center;
+        }
+        .id-card input, .id-card select {
+            width: 100%; padding: 18px; border-radius: 15px; border: 1px solid var(--glass-border);
+            background: #000; color: white; margin-bottom: 15px; font-weight: 600; text-align: center;
+        }
+        .id-card input:focus, .id-card select:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+        .food-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; width: 100%; max-width: 1200px; 
+        }
+        .food-card {
+            background: rgba(255,255,255,0.02); border-radius: 40px; padding: 30px;
+            border: 1px solid var(--glass-border); transition: 0.4s;
+        }
+        .food-card:hover { transform: translateY(-10px); border-color: var(--primary); background: rgba(255,255,255,0.05); }
+
+        /* ABA 3: EQUIPE */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; width: 100%; max-width: 1100px; }
+        .member-card {
+            background: var(--glass); padding: 40px 20px; border-radius: 35px; border: 1px solid var(--glass-border);
+            text-align: center; position: relative;
+        }
+        .status-badge { 
+            position: absolute; top: 20px; right: 20px; width: 10px; height: 10px; 
+            border-radius: 50%; background: var(--success); box-shadow: 0 0 10px var(--success);
+        }
+
+        /* CARRINHO FLOAT */
+        .cart-float {
+            position: fixed; bottom: 30px; right: 30px; z-index: 2000;
+            background: var(--ifood); color: white; padding: 20px 35px; border-radius: 50px;
+            font-weight: 900; display: none; align-items: center; gap: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); cursor: pointer; border: none;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none; justify-content: center; 
+            align-items: center; z-index: 11000; backdrop-filter: blur(20px);
+        }
+        .modal-content { background: #08121a; padding: 45px; border-radius: 45px; width: 95%; max-width: 480px; border: 1px solid var(--glass-border); }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; }
+            .nav-links { gap: 15px; }
+            header a { font-size: 8px; }
+            section { padding: 120px 5% 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Transição -->
+    <div id="page-transition"><div class="loader-icon"></div></div>
+
+    <header>
+        <div class="logo" onclick="switchTab('home')">ÁREA<span class="destaque">31</span></div>
+        <nav class="nav-links">
+            <a onclick="switchTab('home')" id="link-home" class="nav-active">Início</a>
+            <a onclick="switchTab('food')" id="link-food">31Food</a>
+            <a onclick="switchTab('equipe')" id="link-equipe">Equipe</a>
+            <a onclick="switchTab('lock')" id="link-lock"><span class="material-symbols-outlined" style="font-size: 18px;">lock</span></a>
+        </nav>
+    </header>
+
+    <!-- Botão Carrinho -->
+    <button id="cart-btn" class="cart-float" onclick="openCart()">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span id="cart-count">0 ITENS</span>
+    </button>
+
+    <!-- ABA 1: INÍCIO (ÁREA 31) -->
+    <section id="home" class="active-section">
+        <div class="hero-container reveal">
+            <span class="blog-tag">Bem-vindo ao nosso portal</span>
+            <h1 class="hero-title">ÁREA <span class="destaque">31</span></h1>
+            <p style="opacity: 0.8; font-size: 1.3rem; max-width: 650px; margin: 0 auto; letter-spacing: 0.5px;">𝐈𝐧 𝐭𝐡𝐞 𝐝𝐢𝐠𝐢𝐭𝐚𝐥 𝐚𝐛𝐲𝐬𝐬, 𝐰𝐞 𝐚𝐫𝐞 𝐬𝐡𝐚𝐫𝐤𝐬 𝐚𝐝𝐫𝐢𝐟𝐭. 💻☢️</p>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                <a href="#" class="btn-social"><span class="material-symbols-outlined">share</span> Instagram</a>
+                <a href="#" class="btn-social"><span class="material-symbols-outlined">group</span> Nosso Grupo</a>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-card reveal">
+                <div class="blog-img"><span class="material-symbols-outlined" style="font-size: 4rem; opacity: 0.1;">campaign</span></div>
+                <div class="blog-content">
+                    <span class="blog-tag">Novidade</span>
+                    <h3>O Portal Área 31 está no ar!</h3>
+                    <p>Agora você pode acompanhar nossas atualizações, conhecer a equipe e pedir seus lanches favoritos em um só lugar.</p>
+                    <button class="btn-social" onclick="switchTab('food')">Ver detalhes</button>
+                </div>
+            </div>
+            <div class="blog-card reveal">
+                <div class="blog-img"><span class="material-symbols-outlined" style="font-size: 4rem; opacity: 0.1;">restaurant</span></div>
+                <div class="blog-content">
+                    <span class="blog-tag">Cardápio</span>
+                    <h3>Novos sabores de Mousse</h3>
+                    <p>Nesta semana teremos o retorno do Mousse de Maracujá com calda extra. Não perca na aba 31Food.</p>
+                    <button class="btn-social" onclick="switchTab('food')">Ir para o Menu</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABA 2: 31FOOD -->
+    <section id="food">
+        <div class="ifood-banner reveal">
+            <div style="max-width: 500px; position: relative; z-index: 2;">
+                <h2>Bateu a fome?</h2>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px;">Peça agora e receba na sua sala. Entrega rápida feita pela equipe da Área 31.</p>
+                <button style="background: white; color: var(--ifood); border: none; padding: 15px 30px; border-radius: 15px; font-weight: 900; cursor: pointer;" onclick="document.getElementById('form-id').scrollIntoView()">FAZER PEDIDO</button>
+            </div>
+            <span class="material-symbols-outlined" style="position: absolute; right: -20px; bottom: -20px; font-size: 18rem; opacity: 0.1; transform: rotate(-15deg);">lunch_dining</span>
+        </div>
+
+        <div class="id-card reveal" id="form-id">
+            <span class="blog-tag">Primeiro Passo</span>
+            <h3 style="margin-bottom: 25px;">Quem está pedindo?</h3>
+            <select id="user-sala">
+                <option value="">Selecione sua sala/local</option>
+                <option>Informática 20</option>
+                <option>Informática 11</option>
+                <option>Meio Ambiente 30</option>
+                <option>Meio Ambiente 21</option>
+                <option>Biblioteca</option>
+                <option>Docentes / Servidores</option>
+            </select>
+            <input type="text" id="user-name" placeholder="Seu Nome Completo">
+            <p style="font-size: 11px; opacity: 0.5; margin-top: 10px;">* Obrigatório para adicionar itens</p>
+        </div>
+
+        <div class="food-grid" id="food-render">
+            <!-- Injetado via JS -->
+        </div>
+    </section>
+
+    <!-- ABA 3: EQUIPE -->
+    <section id="equipe">
+        <div class="hero-container reveal">
+            <h2 style="font-size: 3rem; font-weight: 900;">Nossa <span class="destaque">Equipe</span></h2>
+            <p style="opacity: 0.5;">As mentes e os braços que fazem tudo acontecer.</p>
+        </div>
+        <div class="team-grid" id="team-render">
+            <!-- Injetado via JS -->
+        </div>
+    </section>
+
+    <!-- ABA 4: RESTRITO (INTEGRADA COM CADASTRO) -->
+<section id="lock">
+    <div class="id-card reveal auth-wrapper-area31">
+        <style>
+            .auth-wrapper-area31 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 450px;
+                margin: 0 auto;
+                background: rgba(15, 23, 42, 0.4);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 32px;
+                padding: 50px 40px;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                color: white;
+            }
+            .auth-step-area31 {
+                width: 100%;
+                display: none;
+                animation: fadeInAuth 0.5s ease;
+            }
+            @keyframes fadeInAuth {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .auth-input-area31 {
+                width: 100%;
+                padding: 18px;
+                border-radius: 16px;
+                background: #000000;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                color: white;
+                text-align: center;
+                margin-bottom: 20px;
+                outline: none;
+                font-size: 1rem;
+                box-sizing: border-box;
+            }
+            .auth-input-area31:focus { border-color: var(--primary); }
+            
+            .auth-btn-area31 {
+                width: 100%;
+                padding: 18px;
+                border-radius: 16px;
+                background: #F7A088;
+                color: #000000;
+                border: none;
+                font-weight: 800;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                font-size: 0.9rem;
+            }
+            .auth-btn-area31:hover {
+                transform: scale(1.02);
+                filter: brightness(1.1);
+            }
+            .auth-msg-area31 {
+                margin-top: 15px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                display: none;
+                text-align: center;
+            }
+        </style>
+
+        <div id="auth-icon-container">
+            <span class="material-symbols-outlined" style="font-size: 4.5rem; color: #F7A088; margin-bottom: 24px;">shield_person</span>
+        </div>
+        
+        <h2 id="auth-title" style="font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px; font-size: 1.8rem;">Acesso Restrito</h2>
+        
+        <!-- PASSO 1: VERIFICAR MATRÍCULA -->
+        <div id="step-id" class="auth-step-area31" style="display: block;">
+            <p style="opacity: 0.5; margin-bottom: 35px; font-size: 0.95rem;">Identifique-se com sua matrícula para acessar.</p>
+            <input type="text" id="input-mat" class="auth-input-area31" placeholder="Número de Matrícula">
+            <button id="btn-check" class="auth-btn-area31">VERIFICAR ACESSO</button>
+        </div>
+
+        <!-- PASSO 2: LOGIN (PARA QUEM JÁ TEM SENHA) -->
+        <div id="step-login" class="auth-step-area31">
+            <p id="welcome-msg" style="color: #F7A088; font-weight: 700; margin-bottom: 25px;"></p>
+            <input type="password" id="input-pass" class="auth-input-area31" placeholder="Digite sua Senha">
+            <button id="btn-login" class="auth-btn-area31">ENTRAR NO SISTEMA</button>
+            <p onclick="resetAuth()" style="cursor:pointer; opacity:0.4; font-size:0.75rem; margin-top:20px; text-decoration:underline;">Trocar Matrícula</p>
+        </div>
+
+        <!-- PASSO 3: CADASTRO (PRIMEIRO ACESSO) -->
+        <div id="step-register" class="auth-step-area31">
+            <p style="color: #F7A088; font-weight: 700; margin-bottom: 10px;">PRIMEIRO ACESSO</p>
+            <p style="opacity: 0.5; margin-bottom: 25px; font-size: 0.85rem;">Defina uma senha para seus próximos acessos.</p>
+            <input type="password" id="reg-p1" class="auth-input-area31" placeholder="Crie uma Senha">
+            <input type="password" id="reg-p2" class="auth-input-area31" placeholder="Confirme a Senha">
+            <button id="btn-register" class="auth-btn-area31">CADASTRAR E ENTRAR</button>
+        </div>
+
+        <div id="auth-status" class="auth-msg-area31"></div>
+    </div>
+</section>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = JSON.parse(__firebase_config);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-area31';
+
+    let currentUser = null;
+
+    // Gerador de Hash SHA-256 para não salvar senha limpa
+    async function getHash(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password + "area31_secret_salt");
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function notify(msg, isError) {
+        const el = document.getElementById('auth-status');
+        el.innerText = msg;
+        el.style.display = 'block';
+        el.style.color = isError ? '#ff5f5f' : '#F7A088';
+    }
+
+    // Lógica do botão "Verificar"
+    document.getElementById('btn-check').addEventListener('click', async () => {
+        const mat = document.getElementById('input-mat').value.trim();
+        if(!mat) return notify("Digite sua matrícula.", true);
+
+        notify("Validando...", false);
+        try {
+            await signInAnonymously(auth);
+            const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'alunos', mat);
+            const snap = await getDoc(userRef);
+            
+            if(snap.exists()) {
+                currentUser = { id: mat, ...snap.data() };
+                document.getElementById('step-id').style.display = 'none';
+                
+                // Se já tem hash no banco, vai para Login. Se não, vai para Cadastro.
+                if(currentUser.passwordHash) {
+                    document.getElementById('welcome-msg').innerText = `Olá, ${currentUser.nome.split(' ')[0]}!`;
+                    document.getElementById('step-login').style.display = 'block';
+                } else {
+                    document.getElementById('step-register').style.display = 'block';
+                }
+                notify("", false);
+            } else {
+                notify("Matrícula não encontrada no sistema.", true);
+            }
+        } catch(e) { notify("Erro de conexão.", true); }
+    });
+
+    // Lógica de Login (Senha)
+    document.getElementById('btn-login').addEventListener('click', async () => {
+        const pass = document.getElementById('input-pass').value;
+        if(!pass) return notify("Digite sua senha.", true);
+        
+        const hash = await getHash(pass);
+        if(hash === currentUser.passwordHash) {
+            loginSuccess();
+        } else {
+            notify("Senha incorreta.", true);
+        }
+    });
+
+    // Lógica de Cadastro (Primeiro Acesso)
+    document.getElementById('btn-register').addEventListener('click', async () => {
+        const p1 = document.getElementById('reg-p1').value;
+        const p2 = document.getElementById('reg-p2').value;
+        
+        if(p1.length < 6) return notify("A senha deve ter no mínimo 6 dígitos.", true);
+        if(p1 !== p2) return notify("As senhas não coincidem.", true);
+
+        notify("Salvando senha...", false);
+        const hash = await getHash(p1);
+        
+        try {
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', currentUser.id), {
+                passwordHash: hash
+            }, { merge: true });
+            loginSuccess();
+        } catch(e) { notify("Erro ao salvar cadastro.", true); }
+    });
+
+    function loginSuccess() {
+        const container = document.querySelector('.auth-wrapper-area31');
+        container.innerHTML = `
+            <span class="material-symbols-outlined" style="font-size: 5rem; color: #00ff88; margin-bottom: 24px;">verified_user</span>
+            <h2 style="font-weight: 900; margin-bottom: 12px; font-size: 1.8rem;">BEM-VINDO</h2>
+            <p style="opacity: 0.6; margin-bottom: 35px;">Acesso liberado para ${currentUser.nome}</p>
+            <button onclick="location.reload()" class="auth-btn-area31" style="background: rgba(255,255,255,0.1); color: white;">SAIR</button>
+        `;
+        // Dispara evento para o seu site liberar o conteúdo real
+        window.dispatchEvent(new CustomEvent('area31-auth-ok', { detail: currentUser }));
+    }
+
+    window.resetAuth = () => { location.reload(); };
+</script>
+    <!-- MODAL CARRINHO -->
+    <div id="modal-cart" class="modal-overlay">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 style="font-weight: 900;">Meu Cesto</h2>
+                <span class="material-symbols-outlined" onclick="closeCart()" style="cursor: pointer; opacity: 0.5;">close</span>
+            </div>
+            
+            <div id="cart-list" style="margin-bottom: 30px; max-height: 250px; overflow-y: auto;">
+                <!-- Itens -->
+            </div>
+
+            <div style="border-top: 1px solid var(--glass-border); padding-top: 20px; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 900;">
+                    <span>Total</span>
+                    <span class="destaque">R$ <span id="total-val">0,00</span></span>
+                </div>
+            </div>
+
+            <button onclick="checkout()" style="width: 100%; padding: 20px; border-radius: 20px; background: var(--ifood); color: white; border: none; font-weight: 900; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">
+                <span class="material-symbols-outlined">send</span> ENVIAR PARA WHATSAPP
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Número atualizado para 559870261471
+        const WHATS_NUMBER = "559870261471";
+        
+        const PRODUTOS = [
+            { id: 1, nome: "Sorvete Artesanal", preco: 8.00, desc: "Sabor único, produção local." },
+            { id: 2, nome: "Mousse Cremoso", preco: 4.00, desc: "Maracujá ou Chocolate." },
+            { id: 3, nome: "Cremosinho", preco: 2.00, desc: "O clássico do intervalo." },
+            { id: 4, nome: "Trufa Gourmet", preco: 3.50, desc: "Chocolate nobre recheado." }
+        ];
+
+        const MEMBROS = ["Maisa", "Ana Clara", "Emanuele", "Geovana"];
+
+        let cart = [];
+
+        // Sistema de Abas
+        function switchTab(tabId) {
+            const overlay = document.getElementById('page-transition');
+            overlay.style.display = 'flex';
+            setTimeout(() => overlay.classList.add('active'), 10);
+
+            setTimeout(() => {
+                document.querySelectorAll('section').forEach(s => s.classList.remove('active-section'));
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
+
+                document.getElementById(tabId).classList.add('active-section');
+                document.getElementById('link-' + tabId).classList.add('nav-active');
+
+                window.scrollTo(0,0);
+                setTimeout(reveal, 100);
+
+                overlay.classList.remove('active');
+                setTimeout(() => overlay.style.display = 'none', 400);
+            }, 500);
+        }
+
+        // Animação Scroll
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50) el.classList.add("active");
+            });
+        }
+
+        // Renderização Dinâmica
+        function renderItems() {
+            // Food
+            const foodGrid = document.getElementById('food-render');
+            foodGrid.innerHTML = PRODUTOS.map(p => `
+                <div class="food-card reveal active">
+                    <h3 style="font-weight: 800;">${p.nome}</h3>
+                    <p style="opacity: 0.5; font-size: 0.85rem; margin-bottom: 20px;">${p.desc}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 1.4rem; font-weight: 900; color: var(--success);">R$ ${p.preco.toFixed(2)}</span>
+                        <button class="btn-add" onclick="addToCart(${p.id})" style="width: 45px; height: 45px; border-radius: 12px; border: none; background: white; color: black; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Team
+            const teamGrid = document.getElementById('team-render');
+            teamGrid.innerHTML = MEMBROS.map(m => `
+                <div class="member-card reveal active">
+                    <div class="status-badge"></div>
+                    <div style="font-size: 3rem; margin-bottom: 15px; opacity: 0.2;">👤</div>
+                    <h4 style="font-weight: 800; font-size: 1.2rem;">${m}</h4>
+                    <p style="font-size: 10px; opacity: 0.4; text-transform: uppercase; letter-spacing: 2px;">Equipe da Área 31</p>
+                </div>
+            `).join('');
+        }
+
+        // Validação de Identificação
+        function checkIdentification() {
+            const sala = document.getElementById('user-sala').value;
+            const nome = document.getElementById('user-name').value;
+            
+            if(!sala || !nome) {
+                document.getElementById('form-id').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('user-name').focus();
+                
+                // Piscar o formulário para avisar visualmente
+                const card = document.getElementById('form-id');
+                card.style.borderColor = 'var(--ifood)';
+                setTimeout(() => card.style.borderColor = 'var(--glass-border)', 1000);
+                
+                return false;
+            }
+            return true;
+        }
+
+        // Lógica de Carrinho
+        function addToCart(id) {
+            // Bloqueio antes de adicionar qualquer item
+            if(!checkIdentification()) return;
+
+            const item = PRODUTOS.find(p => p.id === id);
+            cart.push(item);
+            updateCartUI();
+            
+            // Feedback visual no botão flutuante
+            const btn = document.getElementById('cart-btn');
+            btn.style.display = 'flex';
+            btn.style.transform = 'scale(1.1)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+        }
+
+        function updateCartUI() {
+            const count = document.getElementById('cart-count');
+            count.innerText = cart.length + (cart.length === 1 ? " ITEM" : " ITENS");
+            
+            const list = document.getElementById('cart-list');
+            list.innerHTML = cart.map((item, index) => `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <div>
+                        <p style="font-weight: 700;">${item.nome}</p>
+                        <p style="font-size: 12px; color: var(--success);">R$ ${item.preco.toFixed(2)}</p>
+                    </div>
+                    <span class="material-symbols-outlined" onclick="removeFromCart(${index})" style="cursor: pointer; color: #ff4444; font-size: 18px;">delete</span>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((acc, curr) => acc + curr.preco, 0);
+            document.getElementById('total-val').innerText = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            if(cart.length === 0) {
+                closeCart();
+                document.getElementById('cart-btn').style.display = 'none';
+            }
+            updateCartUI();
+        }
+
+        function openCart() { 
+            if(checkIdentification()) {
+                document.getElementById('modal-cart').style.display = 'flex'; 
+            }
+        }
+        
+        function closeCart() { document.getElementById('modal-cart').style.display = 'none'; }
+
+        function checkout() {
+            if(!checkIdentification()) return;
+            if(cart.length === 0) return alert("Seu carrinho está vazio!");
+
+            const sala = document.getElementById('user-sala').value;
+            const nome = document.getElementById('user-name').value;
+
+            let message = `*🍕 NOVO PEDIDO - ÁREA 31*\n\n`;
+            message += `*CLIENTE:* ${nome}\n`;
+            message += `*LOCAL:* ${sala}\n`;
+            message += `----------------------------\n`;
+            cart.forEach(i => message += `• ${i.nome} - R$ ${i.preco.toFixed(2)}\n`);
+            message += `----------------------------\n`;
+            message += `*TOTAL: R$ ${cart.reduce((a,b)=>a+b.preco,0).toFixed(2)}*`;
+
+            window.open(`https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(message)}`);
+        }
+
+        // Inicialização
+        window.onload = () => {
+            renderItems();
+            setTimeout(reveal, 200);
+            window.addEventListener('scroll', reveal);
+        };
+    </script>
+</body>
+</html>
